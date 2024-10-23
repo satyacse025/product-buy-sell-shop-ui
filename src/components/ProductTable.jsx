@@ -1,6 +1,8 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useLoaderData } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+
 
 export default function ProductTable() {
 
@@ -23,6 +25,11 @@ export default function ProductTable() {
           });
       };
     return (
+
+        <>
+            <Helmet>
+                <title>Dashboard | All Products</title>
+            </Helmet>
         <div>
 
 
@@ -108,5 +115,6 @@ export default function ProductTable() {
             </div>
 
         </div>
+        </>
     )
 }

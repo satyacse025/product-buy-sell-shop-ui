@@ -10,6 +10,13 @@ import ProductForm from "../components/ProductForm";
 import ProductEdit from "../components/ProductEdit";
 import CategoryTable from "../components/CategoryTable";
 import CategoryForm from "../components/CategoryForm";
+import DashboardBody from "../components/DashboardBody";
+import Test from "../components/Test";
+import CategoryEdit from "../components/CategoryEdit";
+import Login from "../pages/Login";
+import Register from "../pages/Register";
+import PrivateRoute from "./PrivateRoute";
+import AllProducts from "../pages/AllProducts";
 
 const router = createBrowserRouter([
     {
@@ -19,6 +26,22 @@ const router = createBrowserRouter([
           {
             path: "/",
             element: <HomePage />,
+          },
+          {
+            path: "/login",
+            element: <Login />,
+          },
+          {
+            path: "/register",
+            element: <Register />,
+          },
+          {
+            path: "/all-products",
+            element: (
+              <PrivateRoute>
+                  <AllProducts></AllProducts>
+                </PrivateRoute>
+            ),
           },
         ],
       },
@@ -37,15 +60,23 @@ const router = createBrowserRouter([
         path: "/add/product",
         element: <ImageUpload></ImageUpload>,
       },
+      {
+        path: "/test",
+        element: <Test></Test>,
+      },
       
 
       {
         path: "/dashboard",
-        element: <Dashboard />,
+        element: (
+          <PrivateRoute>
+              <Dashboard></Dashboard>
+            </PrivateRoute>
+        ),
         children: [
           {
             path: "/dashboard",
-            element: '',
+            element: <DashboardBody></DashboardBody>
           },
           {
             path: "/dashboard/categories",
@@ -55,6 +86,11 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/category/add",
             element: <CategoryForm />,
+          },
+          {
+            path: "/dashboard/category/edit/:id",
+            element: <CategoryEdit />,
+            loader: ({ params }) => fetch(`http://localhost:5000/category/${params.id}`),
           },
           {
             path: "/dashboard/products",

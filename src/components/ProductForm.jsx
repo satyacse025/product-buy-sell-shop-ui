@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-
+import { Helmet } from "react-helmet-async";
 
 
 export default function ProductForm() {
-
+    
     const [categories, setCategories] = useState([]);
     const [categoryObject, setCategoryObject] = useState({});
     const [formData, setFormData] = useState({
@@ -19,7 +19,7 @@ export default function ProductForm() {
         mileage: ''
     });
     const navigate = useNavigate();
-    const imageHostKey = "c82e0f4efb7046c2298dbff69528a716";
+    const imageHostKey = import.meta.env.VITE_IMAGE_HOST_KEY;
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -112,6 +112,10 @@ export default function ProductForm() {
 
 
     return (
+        <>
+        <Helmet>
+            <title>Dashboard | Add Product</title>
+        </Helmet>
         <div>
 
             <form onSubmit={handleSubmit}>
@@ -208,5 +212,6 @@ export default function ProductForm() {
 
 
         </div>
+        </>
     )
 }

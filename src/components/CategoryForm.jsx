@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { Helmet } from "react-helmet-async";
 
 export default function CategoryForm() {
 
@@ -9,7 +10,7 @@ export default function CategoryForm() {
         image: null
     });
     const navigate = useNavigate();
-    const imageHostKey = "c82e0f4efb7046c2298dbff69528a716";
+    const imageHostKey = import.meta.env.VITE_IMAGE_HOST_KEY;
 
    
     const handleInputChange = (e) => {
@@ -75,10 +76,14 @@ export default function CategoryForm() {
 
 
     return (
+        <>
+        <Helmet>
+            <title>Dashboard | Add Category</title>
+        </Helmet>
         <div>
 
             <form onSubmit={handleSubmit}>
-                <h1 className='text-center font-semibold text-lg'>Add Product</h1>
+                <h1 className='text-center font-semibold text-lg'>Add category</h1>
                 <div className="divider divide-dashed"></div>
                 <div className="grid gap-6 mb-6 md:grid-cols-2">
                     <div>
@@ -98,7 +103,7 @@ export default function CategoryForm() {
                             type="file"
                             name="image"
                             onChange={handleFileChange}
-                            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"  />
+                            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" required />
                         <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" >SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
 
                     </div>
@@ -117,5 +122,6 @@ export default function CategoryForm() {
 
 
         </div>
+        </>
     )
 }
