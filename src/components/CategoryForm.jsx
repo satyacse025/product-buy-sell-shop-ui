@@ -43,7 +43,7 @@ export default function CategoryForm() {
                 };
 
                 // Save product information to the database
-                const result = await fetch('http://localhost:5000/category', {
+                const result = await fetch('https://product-buy-sell-shop-server.onrender.com/category', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json',

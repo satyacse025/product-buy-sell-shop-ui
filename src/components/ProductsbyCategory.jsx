@@ -2,24 +2,26 @@ import React, { useState, useEffect } from 'react';
 import toast from "react-hot-toast";
 import { Link, useLoaderData, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import StarRating from '../components/StarRating';
+import StarRating from './StarRating';
 
+export default function ProductsbyCategory() {
+    const loadedProducts = useLoaderData();
+    const [products, setProducts] = useState(loadedProducts);
+    const location = useLocation();
+    const selectCategory = location.state?.productCatrgory;
 
-export default function AllProducts() {
-  const loadedProducts = useLoaderData();
-  const [products, setProducts] = useState(loadedProducts);
+    return (
 
-  return (
-     <>
+        <>
             <Helmet>
-                <title>Dashboard | All Products </title>
+                <title>Dashboard | All Products - Category : {selectCategory} </title>
             </Helmet>
 
 
-            <div className="bg-white pt-6 dark:bg-black">
+            <div className="bg-white pt-6">
                 <div className="w-full">
                     <div className='lg:w-5/6 mx-auto'>
-                        <div className="divider"><h1 className="text-center text-green-800 text-xl font-bold mb-2">All Products | Total = {products.length} </h1></div>
+                        <div className="divider"><h1 className="text-center text-green-800 text-xl font-bold mb-2">All Products | Category : {selectCategory}</h1></div>
 
                         <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 ml-5 mr-5">
 
@@ -49,5 +51,5 @@ export default function AllProducts() {
             </div>
         </>
 
-  )
+    )
 }

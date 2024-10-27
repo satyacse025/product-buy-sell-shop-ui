@@ -6,6 +6,7 @@ import { IoLogOutOutline } from "react-icons/io5";
 import mainLogo from '../assets/carlogo.png';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from "../provider/AuthProvider";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 export default function Navbar() {
   const [dark, setDark] = useState(false);
@@ -50,16 +51,16 @@ export default function Navbar() {
               <div className="navbar-end flex justify-center items-center">
 
                 {user && <span className="text-white hidden md:block">{user.displayName}</span>}
-                <div
+                {user &&<div
                   tabIndex={0}
                   role="button"
                   className="btn btn-ghost btn-circle avatar mr-3"
                 >
                   <div className="w-7 rounded-full">
                     {/* <img alt="User" src={user?.photoURL} /> */}
-                    {user && <img src={user?.photoURL} alt="" />}
+                     <img src={user?.photoURL} alt="" />
                   </div>
-                </div>
+                </div>}
 
                 {user ? (
 
@@ -82,18 +83,16 @@ export default function Navbar() {
                         {/* <img src={loginLogo} alt="" className='w-16' /> */}
                         <IoLogInOutline size="30px" color="white" />
                       </span>
-                      <span className="hidden md:block  py-2 px-3 text-white hover:bg-[#60c5ea] rounded md:bg-transparent md:text-white  md:p-0 md:dark:text-white ">
+                      <span className="hidden md:block  py-2 px-3 text-white hover:text-green-300 rounded md:bg-transparent md:text-white  md:p-0 md:dark:text-white ">
                         Login
                       </span>
                     </span>
                   </Link>
                 )}
               </div>
-              <button data-collapse-toggle="menu" type="button" className="inline-flex items-center w-10 h-10 justify-center text-sm text-black rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="menu" aria-expanded="false">
+              <button  data-collapse-toggle="menu" type="button" className="inline-flex items-center w-10 h-10 justify-center text-sm text-black rounded-lg md:hidden hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="menu" aria-expanded="false">
                 <span className="sr-only">Open main menu</span>
-                <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14" onClick={() => hiddenShowHandler()}>
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15" />
-                </svg>
+                <GiHamburgerMenu size="30px" color="white" onClick={() => hiddenShowHandler()}/>
               </button>
               <span className='pl-0 md:pl-6'><button onClick={() => darkModeHandler()}>
                 {
@@ -112,15 +111,15 @@ export default function Navbar() {
             <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="menu">
               <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 dark:bg-black">
                 <li>
-                  <Link to={"/"} className="block py-2 px-3 text-white hover:bg-[#60c5ea] rounded md:bg-transparent md:text-white  md:p-0 md:dark:text-white ">Home</Link>
+                  <Link to={"/"} className="block py-2 px-3 text-white hover:text-green-300 rounded md:bg-transparent md:text-white  md:p-0 md:dark:text-white ">Home</Link>
                 </li>
 
                 <li>
-                  <Link to={"/all-products"} className="block py-2 px-3 text-white hover:bg-[#60c5ea] rounded md:bg-transparent md:text-white  md:p-0 md:dark:text-white ">All Products</Link>
+                  <Link to={"/all-products"} className="block py-2 px-3 text-white hover:text-green-300 rounded md:bg-transparent md:text-white  md:p-0 md:dark:text-white ">All Products</Link>
                 </li>
                 {user &&
                   <li>
-                    <Link to={"/dashboard"} className="block py-2 px-3 text-white hover:bg-[#60c5ea] rounded md:bg-transparent md:text-white  md:p-0 md:dark:text-white ">Dashboard</Link>
+                    <Link to={"/dashboard"} className="block py-2 px-3 text-white hover:text-green-300 rounded md:bg-transparent md:text-white  md:p-0 md:dark:text-white ">Dashboard</Link>
                   </li>
                 }
               </ul>

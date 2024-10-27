@@ -2,68 +2,47 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import toast from "react-hot-toast";
-import { GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
-  const { signIn, googleSignIn, githubSignIn } = useContext(AuthContext);
+  const { signIn } = useContext(AuthContext);
 
-  const googleProvider = new GoogleAuthProvider();
-  const githubProvider = new GithubAuthProvider();
+
   const navigate = useNavigate();
   const location = useLocation();
-  console.log("Location in the login page", location);
+
 
   const handleLogin = (event) => {
     event.preventDefault();
 
     const form = new FormData(event.currentTarget);
-    console.log(form);
+
 
     const email = form.get("email");
     const password = form.get("password");
-    console.log(email, password);
+  
 
     signIn(email, password)
       .then((result) => {
-        console.log(result.user);
         toast.success("User Login Successful", {
           position: "top-right",
         });
         navigate(location?.state ? location.state : "/dashboard");
       })
       .catch((error) => {
-        console.log(error);
+        toast.error("Invalid Email and Password");
       });
   };
 
-  const handleGoogleSignin = () => {
-    googleSignIn(googleProvider)
-      .then((result) => {
-        console.log(result.user);
-        toast.success("User Google Login Successful", {
-          position: "top-right",
-        });
-        navigate(location?.state ? location.state : "/");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+ 
 
-  const handleGitHubSignin = () => {
-    githubSignIn(githubProvider)
-      .then((result) => {
-        console.log(result.user);
-        toast.success("User GitHub Login Successful", {
-          position: "top-right",
-        });
-        navigate(location?.state ? location.state : "/");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  
   return (
+
+    <>
+            <Helmet>
+                <title>Car Bazar | Login</title>
+            </Helmet>
     <div>
       <div className="py-8 bg-white dark:bg-black">
         <div className="flex h-full items-center justify-center">
@@ -132,7 +111,7 @@ const Login = () => {
                   <div className="flex flex-col gap-2">
                     <button
                       type="submit"
-                      className="text-white bg-blue-800 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
+                      className="text-white bg-[#00ABE4] hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
                     >
                       <span className="flex items-center justify-center gap-1 font-medium py-1 px-2.5 text-base false">
                         Login
@@ -157,6 +136,7 @@ const Login = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

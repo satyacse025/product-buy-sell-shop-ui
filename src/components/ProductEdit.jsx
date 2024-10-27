@@ -1,22 +1,28 @@
 import React, { useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import { Link, useLoaderData, useNavigate, useLocation  } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 
 
 export default function ProductEdit() {
+
     const loadedProduct = useLoaderData();
     const [categories, setCategories] = useState([]);
     const [categoryObject, setCategoryObject] = useState({});
+    const location = useLocation();
+    const selectCategory = location.state?.productCatrgory;
+
     const [formData, setFormData] = useState({
         name: loadedProduct.carName,
-        category: loadedProduct.category,
+        category: selectCategory,
         image: loadedProduct.image,
         price: loadedProduct.sellPrice,
         brand: loadedProduct.carBrand,
         model: loadedProduct.carModel,
         color: loadedProduct.carColor,
-        mileage: loadedProduct.carMileage
+        mileage: loadedProduct.carMileage,
+        carDisplacement: loadedProduct.carDisplacement,
+        rating: loadedProduct.rating,
     });
     const navigate = useNavigate();
     const imageHostKey = import.meta.env.VITE_IMAGE_HOST_KEY;
@@ -24,7 +30,7 @@ export default function ProductEdit() {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const res = await fetch('http://localhost:5000/categories');
+                const res = await fetch('https://product-buy-sell-shop-server.onrender.com/categories');
                 const data = await res.json();
                 setCategories(data);
 
@@ -75,12 +81,12 @@ export default function ProductEdit() {
                     carModel: formData.model,
                     carColor: formData.color,
                     carMileage: formData.mileage,
-                    postingTime: new Date(),
-                    status: 'available',
+                    carDisplacement: formData.carDisplacement,
+                    rating: formData.rating,
                 };
 
                 // Update product information to the database
-                const result = await fetch(`http://localhost:5000/product/${loadedProduct._id}`, {
+                const result = await fetch(`https://product-buy-sell-shop-server.onrender.com/product/${loadedProduct._id}`, {
                     method: 'PUT',
                     headers: {
                         'content-type': 'application/json',
@@ -107,7 +113,7 @@ export default function ProductEdit() {
             toast.error('An error occurred while editing the product.');
         }
     };
-
+console.log(selectCategory);
 
     return (
         <>
@@ -137,10 +143,10 @@ export default function ProductEdit() {
                             value={formData.category}
                             onChange={handleInputChange}
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            defaultValue={loadedProduct.category}
+                            defaultValue={formData.category}
                             <option value="No Category Selected">Select a category</option>
                             {Object.keys(categoryObject).map((category, index) => (
-                                <option key={index} value={category}>
+                                <option key={index} value={category} >
                                     {category}
                                 </option>
                             ))}
@@ -215,6 +221,26 @@ export default function ProductEdit() {
                             value={formData.mileage}
                             onChange={handleInputChange}
                             defaultValue={loadedProduct.carMileage}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                    </div>
+                    <div>
+                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Car Displacement</label>
+                        <input
+                            type="text"
+                            name="carDisplacement"
+                            value={formData.carDisplacement}
+                            onChange={handleInputChange}
+                            defaultValue={loadedProduct.carDisplacement}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                    </div>
+                    <div>
+                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Car Rating</label>
+                        <input
+                            type="text"
+                            name="rating"
+                            value={formData.rating}
+                            onChange={handleInputChange}
+                            defaultValue={loadedProduct.rating}
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                     </div>
                 </div>

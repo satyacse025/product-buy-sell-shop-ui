@@ -46,7 +46,7 @@ export default function CategoryEdit() {
                 };
 
                 // Update product information to the database
-                const result = await fetch(`http://localhost:5000/category/${loadedCategory._id}`, {
+                const result = await fetch(`https://product-buy-sell-shop-server.onrender.com/category/${loadedCategory._id}`, {
                     method: 'PUT',
                     headers: {
                         'content-type': 'application/json',

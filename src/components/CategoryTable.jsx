@@ -1,13 +1,13 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useLoaderData } from "react-router-dom";
-
+import { Helmet } from "react-helmet-async";
 export default function CategoryTable() {
     const loadedCategories = useLoaderData();
     const [categories, setCategories] = useState(loadedCategories);
 
     const handleDelete = (_id) => {
-        fetch(`http://localhost:5000/category/${_id}`, {
+        fetch(`https://product-buy-sell-shop-server.onrender.com/category/${_id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -22,6 +22,10 @@ export default function CategoryTable() {
           });
       };
     return (
+        <>
+        <Helmet>
+            <title>Dashboard | All Categories</title>
+        </Helmet>
         <div>
 
 
@@ -73,5 +77,6 @@ export default function CategoryTable() {
             </div>
 
         </div>
+        </>
     )
 }
